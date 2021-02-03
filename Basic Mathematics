@@ -1,0 +1,466 @@
+//Prblm 1, Trapping Rain Water
+#include<iostream>
+using namespace std;
+
+int left_height(int arr[], int i)
+{
+	int x, max;
+	max = arr[i];
+	for(x=i-1; x>=0; x--)
+	    if(arr[x] > max)
+	        max = arr[x];
+	return max;
+}
+
+int right_height(int arr[], int i, int n)
+{
+	int x, max;
+	max = arr[i];
+	for(x=i+1; x<n; x++)
+	    if(arr[x] > max)
+	        max = arr[x];
+	return max;
+}
+
+int minimum(int arr[], int i, int n)
+{
+	int min, capacity, left, right;
+	left = left_height(arr, i);
+	right = right_height(arr, i, n);
+	if(left < right)
+	    min = left;
+	else
+	    min = right;
+	capacity = min - arr[i];
+	return capacity;
+}
+int main()
+{
+	int n, arr[10], i, cap, sum = 0;
+	cout << "Enter size of array :";
+	cin >> n;
+	cout << "Array elements :";
+	for(i=0; i<n; i++)
+	    cin >> arr[i];
+	for(i=0; i<n; i++)
+	{
+		cap = minimum(arr, i, n);
+		sum = sum + cap;
+	}
+	cout << "Total water trapped is : "<<sum<<" units";
+	return 0;
+}
+
+
+//Prblm 2. Check whether a no is Prime or not
+
+#include<iostream>
+#include<cmath>
+using namespace std;
+
+//Method 1:      //Time complexity -- O(n)
+bool isprime_1(int num)
+{
+	int n;
+	for(n=2 ; n<=num ; n++)              // or n<num/2 or n<(num)^0.5
+	{
+		if(num%n == 0)
+		    return false;
+	}
+	return true;
+}
+
+int main()
+{
+	int num;
+	bool result;
+	cout << "Number : ";
+	cin >> num;
+	result = isprime_1(num);
+	//result = isprime_2(num);
+	//result = isprime_3(num);
+	if(result == 1)
+	    cout << "Prime number";
+	else
+	    cout << "Not a prime number";
+	return 0;
+}
+
+Method 2:   //Time complexity -- O(num)
+bool isprime_2(int num)
+{
+	int n;
+	for(n=2 ; n<=num/2 ; n++)              
+	{
+		if(num%n == 0)
+		    return false;
+	}
+	return true;
+}
+
+Method 3:  //time complexity -- O(num^0.5)
+bool isprime_3(int num)
+{
+	int n;
+	for(n=2 ; n*n<=num ; n++)              
+	{
+		if(num%n == 0)
+		    return false;
+	}
+	return true;
+}
+
+
+//Prblm 3. Print all substrings of a given string
+
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+void substring(string s)
+{
+	string substr="";
+	int n = s.length();
+	cout << "Substrings of the given string is : " << endl;
+	for(int i=0; i<n; i++)
+	{
+		substr="";
+		for(int j=i; j<n; j++)
+		{
+		
+		    substr = substr +s[j];
+		    cout << substr << endl;
+	}
+	}
+}
+
+int main()
+{
+	string s;
+	cout << "Enter a string : ";
+	getline(cin, s);
+	substring(s);
+	return 0;
+}
+
+
+//Prblm 4. Find suare root of a no
+
+#include<iostream>
+using namespace std;
+
+//Method 1: Time complexity -- O(n^0.5)
+//int suare_root(int n)
+//{
+//	int i;
+//	for(i=0; i<=n; i++)
+//	{
+//		if(i*i == n)
+//		    return i;
+//		if(i*i > n)
+//		    return i-1;
+//	}
+//}
+
+
+//Method 2: Time complexity -- O(logn)
+int suare_root(int n)
+{
+	int l=0, h=n, mid, ans;
+	while(l <= h)
+	{
+		mid = (l+h)/ 2;
+		if(mid*mid == n)
+		    return mid;
+		if(mid*mid > n)
+		    h = mid-1;
+		else
+		{
+			l = mid+1;
+			ans = mid;
+		}
+	}
+	return ans;
+}
+
+int main()
+{
+	int n, ans;
+	cout << "Enter a no :";
+	cin >> n;
+	ans = suare_root(n);
+	cout << "Suare root is : " << ans ;
+	return 0;
+}
+
+
+//Prblm 5. Smallest divisible no
+//Given a number N, find an integer denoting the smallest number evenly divisible by each number from 1 to n.
+//Time complexity -- O(n)
+#include<iostream>
+using namespace std;
+
+//Method:(using gcd)
+// Function returns the lcm of first n numbers 
+
+int gcd(int a, int b)
+{
+    if (b == 0)
+        return a;
+    return gcd(b, a % b); 
+}
+int smallest_no(int n) 
+{ 
+    int ans = 1;     
+    for (int i = 1; i <= n; i++) 
+        ans = (ans * i)/(gcd(ans, i)); 
+    return ans; 
+} 
+int main()  
+{ 
+    int n ; 
+    cout << "Enter n :";
+    cin >> n;
+    cout << smallest_no(n); 
+    return 0; 
+} 
+
+
+//Prblm 6.Addition under modulo
+//Given two numbers a and b, find the sum of a and b. Since the sum can be very large, find the sum modulo 109+7.
+//Time complexity -- O(1) , Space complexity -- O(1)
+#include<iostream>
+#include<cmath>
+using namespace std;
+
+long long add(long long a, long long b)
+{
+	long long ans, m;
+	m = pow(10,9) + 7;
+	ans = ( (a % m) + (b % m) ) % m;
+	return ans;
+}
+int main()
+{
+	long long ans, a, b;
+     cout << "Enter a and b :";
+     cin >> a >> b;
+	ans = add(a , b);
+	cout << ans;
+	return 0;
+}
+
+//Prblm 7. Absolute value
+//You are given an interger I, find the absolute value of the interger I.
+//Time complexity -- O(1) , Space complexity -- O(1)
+
+#include<iostream>
+using namespace std;
+
+int absolute(int I)
+{
+	if(I < 0)
+	    return (-1) * I;
+	return I;
+}
+int main()
+{
+	int I, ans;
+	cout << "Enter integer :";
+	cin >> I;
+	ans = absolute(I);
+	cout << "Absolute value : " << ans;
+	return 0;
+}
+
+//Prblm 8. Quadratic Equation Roots
+//Given a quadratic equation in the form ax2 + bx + c. Find its roots.
+//Time complexity -- O(1) , Space complexity -- O(1)
+
+#include<iostream>
+#include<cmath>
+#include<vector>
+using namespace std;
+
+vector<int> quadraticRoots(int a, int b, int c) {
+        // code here
+            vector<int> roots;
+        int root1 = 0, root2 = 0;
+        // value of b^2-4ac
+        int temp = (pow(b, 2) - 4 * a * c);
+
+        // if b^2-4ac is less then zero then roots are imaginary
+        if (temp < 0)
+            roots.push_back(-1);
+        else {
+            // root1
+            root1 = floor((-b + sqrt(temp)) / (2 * a));
+            // root2
+            root2 = floor((-b - sqrt(temp)) / (2 * a));
+
+            roots.push_back(max(root1, root2));
+            roots.push_back(min(root1, root2));
+        }
+        return roots;
+    }
+int main()
+{
+	vector<int> v;
+	int a, b, c;
+	cout << "Enter a, b, c :";
+	cin >> a >> b >> c;
+	v = quadraticRoots(a, b, c);
+	int n = v.size();
+	for (int i=0;i<n;i++)
+        cout << v[i] << " "; 
+	return 0;
+}
+
+/* Prblm 9. Digits In Factorial 
+Given an integer N. Find the number of digits that appear in its factorial. 
+Factorial is defined as, factorial(n) = 1*2*3*4……..*N and factorial(0) = 1.
+Time complexity -- O(N)  , Space complexity -- O(1)
+*/
+
+#include<iostream>
+#include<cmath>
+using namespace std;
+int digits(int n);
+int main()
+{
+	int n, ans;
+	cin >> n;
+	ans = digits(n);
+	cout << ans;
+	return 0;
+}
+
+int digits(int n)
+{
+	int k,i;
+	double sum;
+	sum = log10(n);
+	for(i=1; i<n;i++)
+	{
+	double temp = log10(i);
+	    sum = sum + temp;
+    }
+    k = floor(sum) + 1;
+    return k;
+}
+
+/* Prblm 10. GP Term
+Given the first 2 terms A and B of a Geometric Series. The task is to find the Nth term of the series.
+Time Complexity : O(logN)
+Space Complexity : O(1)
+*/
+
+#include<iostream>
+#include<cmath>
+using namespace std;
+
+double term(int A, int B, int N)
+{
+	double r ;
+     r = double(B)/double(A);
+	double nth_term;
+	double ans = pow(r, (N-1));
+	nth_term = double(A) * ans;
+	return nth_term;
+}
+int main()
+{
+	int A, B, N;
+	double ans;
+	cin >> A>>B>>N;
+	ans = term(A,B,N);
+	cout << ans;
+     return 0;
+}
+
+/*Prblm 11. Exactly 3 divisors
+Given a positive integer value N. The task is to find how many numbers less than or equal 
+to N have numbers of divisors exactly equal to 3.
+Time Complexity : O(N^1/2 * N^1/4)
+Space Complexity :  O(1)
+*/
+
+#include<iostream>
+#include<cmath>
+using namespace std;
+
+bool isprime(int num)
+{
+	for(int j=2 ; j*j<=num ; j++)             
+	{
+		if(num%j == 0)
+		    return false;
+	}
+	return true;
+}
+
+int divisor(int n)
+{
+	int count = 0;
+	for(int i = 2; i * i <= n; i++)
+    {
+         
+        // Check prime
+        if (isprime(i))
+        {
+            if (i * i <= n)
+            {
+             cout<<i*i <<endl;    
+                count = count + 1;
+            }
+        }
+    }
+    return count;
+}
+int main()
+{
+	int n = 49,c;
+     c = divisor(n);
+     cout << c;
+	return 0;	
+}
+
+/* Prblm 12.
+Modular Multiplicative inverse
+Given two integers ‘a’ and ‘m’. The task is to find the smallest modular multiplicative inverse of ‘a’ under modulo ‘m’.
+Time complexity -- O(m), Space Complexity -- O(1)
+*/
+
+#include<iostream>
+using namespace std;
+
+int gcd(int a, int b)
+{
+    if (b == 0)
+        return a;
+    return gcd(b, a % b); 
+}
+int modInverse(int a, int m)
+{
+    //Your code here
+    if(gcd(a,m) == 1)
+    {
+        for(int x=1; x<m; x++)
+            if((a*x) % m == 1)
+                return x;
+        
+    }
+    return -1;
+}
+
+int main()
+{
+	int a, m;
+	int ans;
+	cout<<"Enter a and m :";
+	cin >> a >> m;
+	ans = modInverse(a, m);
+	cout << ans;
+	return 0;
+}
+
