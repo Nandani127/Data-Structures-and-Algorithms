@@ -144,13 +144,13 @@ int main()
 }
 
 
-//Prblm 4. Find suare root of a no
+//Prblm 4. Find square root of a no
 
 #include<iostream>
 using namespace std;
 
 //Method 1: Time complexity -- O(n^0.5)
-//int suare_root(int n)
+//int square_root(int n)
 //{
 //	int i;
 //	for(i=0; i<=n; i++)
@@ -164,7 +164,7 @@ using namespace std;
 
 
 //Method 2: Time complexity -- O(logn)
-int suare_root(int n)
+int square_root(int n)
 {
 	int l=0, h=n, mid, ans;
 	while(l <= h)
@@ -188,8 +188,8 @@ int main()
 	int n, ans;
 	cout << "Enter a no :";
 	cin >> n;
-	ans = suare_root(n);
-	cout << "Suare root is : " << ans ;
+	ans = square_root(n);
+	cout << "Square root is : " << ans ;
 	return 0;
 }
 
